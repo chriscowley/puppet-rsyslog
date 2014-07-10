@@ -1,35 +1,28 @@
-# rsyslog configuration file
+# File managed by Puppet, any changes will be overwritten.
+
+
+
+# rsyslog v5 configuration file
 
 # For more information see /usr/share/doc/rsyslog-*/rsyslog_conf.html
 # If you experience problems, see http://www.rsyslog.com/doc/troubleshoot.html
 
 #### MODULES ####
 
-# The imjournal module bellow is now used as a message source instead of imuxsock.
 $ModLoad imuxsock # provides support for local system logging (e.g. via logger command)
-$ModLoad imjournal # provides access to the systemd journal
 $ModLoad imklog   # provides kernel logging support (previously done by rklogd)
 #$ModLoad immark  # provides --MARK-- message capability
 
-
-<% if @udp_port %>
 # Provides UDP syslog reception
-$ModLoad imudp
-$UDPServerRun <%= @udp_port %>
-<% end %>
+#$ModLoad imudp
+#$UDPServerRun 514
 
-
-<% if @tcp_port %>
 # Provides TCP syslog reception
-$ModLoad imtcp
-$InputTCPServerRun <%= @tcp_port %>
-<% end %>
+#$ModLoad imtcp
+#$InputTCPServerRun 514
 
 
 #### GLOBAL DIRECTIVES ####
-
-# Where to place auxiliary files
-$WorkDirectory /var/lib/rsyslog
 
 # Use default timestamp format
 $ActionFileDefaultTemplate RSYSLOG_TraditionalFileFormat
@@ -40,13 +33,6 @@ $ActionFileDefaultTemplate RSYSLOG_TraditionalFileFormat
 
 # Include all config files in /etc/rsyslog.d/
 $IncludeConfig /etc/rsyslog.d/*.conf
-
-# Turn off message reception via local log socket;
-# local messages are retrieved through imjournal now.
-$OmitLocalLogging on
-
-# File to store the position in the journal
-$IMJournalStateFile imjournal.state
 
 
 #### RULES ####
@@ -70,7 +56,7 @@ mail.*                                                  -/var/log/maillog
 cron.*                                                  /var/log/cron
 
 # Everybody gets emergency messages
-*.emerg                                                 :omusrmsg:*
+*.emerg                                                 *
 
 # Save news errors of level crit and higher in a special file.
 uucp,news.crit                                          /var/log/spooler
@@ -87,6 +73,7 @@ local7.*                                                /var/log/boot.log
 #
 # An on-disk queue is created for this action. If the remote host is
 # down, messages are spooled to disk and sent when it is up again.
+#$WorkDirectory /var/lib/rsyslog # where to place spool files
 #$ActionQueueFileName fwdRule1 # unique name prefix for spool files
 #$ActionQueueMaxDiskSpace 1g   # 1gb space limit (use as much as possible)
 #$ActionQueueSaveOnShutdown on # save messages to disk on shutdown

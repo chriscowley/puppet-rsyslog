@@ -2,7 +2,9 @@
 #
 # This class is called from rsyslog
 #
-class rsyslog::config {
+class rsyslog::config (
+  $udp_port = $rsyslog::udp_port,
+){
   file { '/etc/rsyslog.conf':
     ensure  => present,
     owner   => 'root',
