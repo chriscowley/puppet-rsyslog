@@ -8,13 +8,17 @@ class rsyslog::params {
     'Debian': {
       $package_name = 'rsyslog'
       $service_name = 'rsyslog'
+      $conf_dir     = '/etc/rsyslog.d'
     }
     'RedHat', 'Amazon': {
       $package_name = 'rsyslog'
       $service_name = 'rsyslog'
+      $conf_dir     = '/etc/rsyslog.d'
     }
     default: {
       fail("${::operatingsystem} not supported")
     }
   }
+  $udp_port = undef
+  $tcp_port = undef
 }

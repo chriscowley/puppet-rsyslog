@@ -10,6 +10,9 @@
 class rsyslog (
   $package_name = $rsyslog::params::package_name,
   $service_name = $rsyslog::params::service_name,
+  $conf_dir     = $rsyslog::params::conf_dir,
+  $udp_port     = $rsyslog::params::udp_port,
+  $tcp_port     = $rsyslog::params::tcp_port,
 ) inherits rsyslog::params {
 
   # validate parameters here
