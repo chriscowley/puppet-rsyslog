@@ -1,14 +1,5 @@
-####Table of Contents
+[![Build Status](https://travis-ci.org/chriscowley/puppet-rsyslog.svg?branch=master)](https://travis-ci.org/chriscowley/puppet-rsyslog)
 
-1. [Overview](#overview)
-2. [Module Description - What the module does and why it is useful](#module-description)
-3. [Setup - The basics of getting started with rsyslog](#setup)
-    * [What rsyslog affects](#what-rsyslog-affects)
-    * [Setup requirements](#setup-requirements)
-    * [Beginning with rsyslog](#beginning-with-rsyslog)
-4. [Usage - Configuration options and additional functionality](#usage)
-5. [Limitations - OS compatibility, etc.](#limitations)
-6. [Development - Guide for contributing to the module](#development)
 
 ##Overview
 
