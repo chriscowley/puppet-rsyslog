@@ -7,54 +7,54 @@
     * [Setup requirements](#setup-requirements)
     * [Beginning with rsyslog](#beginning-with-rsyslog)
 4. [Usage - Configuration options and additional functionality](#usage)
-5. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
 5. [Limitations - OS compatibility, etc.](#limitations)
 6. [Development - Guide for contributing to the module](#development)
 
 ##Overview
 
-A one-maybe-two sentence summary of what the module does/what problem it solves. This is your 30 second elevator pitch for your module. Consider including OS/Puppet version it works with.       
+Installs Rsyslog on RHEL type OS.
 
 ##Module Description
 
-If applicable, this section should have a brief description of the technology the module integrates with and what that integration enables. This section should answer the questions: "What does this module *do*?" and "Why would I use it?"
+Installs Rsyslog from the package manager. With no variables it will perform local logging.
 
-If your module has a range of functionality (installation, configuration, management, etc.) this is the time to mention it.
+
+### TODO
+
+* Install a central logging server
+* Sending logs to a central server
 
 ##Setup
 
 ###What rsyslog affects
 
-* A list of files, packages, services, or operations that the module will alter, impact, or execute on the system it's installed on.
-* This is a great place to stick any warnings.
-* Can be in list or paragraph form. 
+The `rsyslog` package is installed. A config file `/etc/rsyslog.conf` is created, along with `/etc/rsyslog.d` to store extra config.
+
+Currently, this is very RHEL-centric. It should work on Debian, but the placement of log files will change to those of RHEL. For example, instead of logging to `/var/log/syslog` it will log to `/var/log/messages` as on RHEL. This may cause unforseen consequences.
 
 ###Setup Requirements **OPTIONAL**
 
-If your module requires anything extra before setting up (pluginsync enabled, etc.), mention it here. 
+You need to have puppet-stdlib installed.
 
 ###Beginning with rsyslog
 
-The very basic steps needed for a user to get the module up and running. 
-
-If your most recent release breaks compatibility or requires particular steps for upgrading, you may wish to include an additional section here: Upgrading (For an example, see http://forge.puppetlabs.com/puppetlabs/firewall).
+The most basic is:
+```
+class { 'rsyslog': }
+```
 
 ##Usage
 
-Put the classes, types, and resources for customizing, configuring, and doing the fancy stuff with your module here. 
+### rsyslog
 
-##Reference
-
-Here, list the classes, types, providers, facts, etc contained in your module. This section should include all of the under-the-hood workings of your module so people know what the module is touching on their system but don't need to mess with things. (We are working on automating this section!)
+Installs packages and configures the daemon. The defaults are sane for a single RHEL server.
 
 ##Limitations
 
-This is where you list OS compatibility, version compatibility, etc.
+In theory, this should be fine for either RHEL type systems or Debian type systems. In practise I am a RHEL/CentOS guy, so I test mainly on that. For now the template used for the base configuration file is pretty much that shipped in the RHEL package, so it will change the log file names in Debian. This may have not knock-on effects, but it may do.
+
+TL;DR: Debian and Ubuntu people use at your own risk.
 
 ##Development
 
-Since your module is awesome, other users will want to play with it. Let them know what the ground rules for contributing are.
-
-##Release Notes/Contributors/Etc **Optional**
-
-If you aren't using changelog, put your release notes here (though you should consider using changelog). You may also add any additional sections you feel are necessary or important to include here. Please use the `## ` header. 
+Feel free to fork. Push any changes back and please include tests for what you change.
