@@ -8,29 +8,20 @@ class rsyslog::config (
   $conf_template = $rsyslog::conf_template,
   $conf_dir      = $rsyslog::conf_dir,
 ){
+  file { $conf_dir:
+    ensure  => directory,
+  }
+
   file { '/etc/rsyslog.conf':
     ensure  => present,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
     content => template("rsyslog/${conf_template}"),
   }
-  if $udp_port {
-    file { "${conf_dir}/udp_listen.conf":
-      ensure  => present,
-      owner   => 'root',
-      group   => 'root',
-      mode    => '0644',
-      content => template('rsyslog/udp_listen.conf.erb'),
-    }
-  }
-  if is_numeric($tcp_port) {
+
+  if defined($tcp_port) {
     file { "${conf_dir}/tcp_listen.conf":
       ensure  => present,
-      owner   => 'root',
-      group   => 'root',
-      mode    => '0644',
       content => template('rsyslog/tcp_listen.conf.erb'),
+      require => File[$conf_dir],
     }
-#  }
+  }
 }
