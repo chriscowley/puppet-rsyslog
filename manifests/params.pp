@@ -21,6 +21,5 @@ class rsyslog::params {
       fail("${::operatingsystem} not supported")
     }
   }
-  $udp_port = undef
-  $tcp_port = undef
+  $tcp_port = '514'
 }

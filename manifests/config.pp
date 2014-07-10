@@ -17,11 +17,9 @@ class rsyslog::config (
     content => template("rsyslog/${conf_template}"),
   }
 
-  if defined($tcp_port) {
-    file { "${conf_dir}/tcp_listen.conf":
-      ensure  => present,
-      content => template('rsyslog/tcp_listen.conf.erb'),
-      require => File[$conf_dir],
-    }
+  file { "${conf_dir}/tcp_listen.conf":
+    ensure  => present,
+    content => template('rsyslog/tcp_listen.conf.erb'),
+    require => File[$conf_dir],
   }
 }
