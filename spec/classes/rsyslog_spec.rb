@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'rsyslog' do
   context 'supported operating systems' do
-    ['Debian', 'RedHat'].each do |osfamily|
+    [ 'Debian', 'RedHat'].each do |osfamily|
       describe "rsyslog class without any parameters on #{osfamily}" do
         let(:params) {{ }}
         let(:facts) {{
@@ -18,19 +18,20 @@ describe 'rsyslog' do
 
         it { should contain_service('rsyslog') }
         it { should contain_package('rsyslog').with_ensure('present') }
-        it { should contain_file('/etc/rsyslog.conf').with_content(/rsyslog configuration file/)}
+        it { should contain_file('/etc/rsyslog.conf').with_content(/rsyslog v5 configuration file/)}
       end
-      describe "rsyslog class with udp_port variable set to '514'" do
-        let(:params){{ :udp_port => '514' }}
-        it { should contain_file('/etc/rsyslog.d/udp_listen.conf')}
-#        it { should contain_file('/etc/rsyslog.d/udp_listen.conf').with_content(/ModLoad imudp/)}
-#        it { should contain_file('/etc/rsyslog.d/udp_listen.con').with_content(/UDPServerRun 514/)}
-      end
-#            describe "rsyslog class with tcp_port variable set to '514'" do
-#        let(:params){{ :tcp_port => 514  }}
+#      describe "rsyslog class with udp_port variable set to '514'" do
+#        let(:params){{ :udp_port => '514' }}
+#        it { should contain_file('/etc/rsyslog.d/udp_listen.conf')}
+##        it { should contain_file('/etc/rsyslog.d/udp_listen.conf').with_content(/ModLoad imudp/)}
+##        it { should contain_file('/etc/rsyslog.d/udp_listen.con').with_content(/UDPServerRun 514/)}
+#      end
+      describe "rsyslog class with tcp_port variable set to '514'" do
+        let(:params){{ :tcp_port => 514  }}
+        it { should contain_file('/etc/rsyslog.conf')
 #        it { should contain_file('/etc/rsyslog.conf').with_content(/ModLoad imtcp/)}
 #        it { should contain_file('/etc/rsyslog.conf').with_content(/InputTCPServerRun 514/)}
-#      end
+      end
     end
   end
 

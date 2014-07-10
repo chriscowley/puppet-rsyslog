@@ -8,11 +8,13 @@ class rsyslog::params {
     'Debian': {
       $package_name = 'rsyslog'
       $service_name = 'rsyslog'
+      $conf_template = 'rsyslog.conf.deb.erb'
       $conf_dir     = '/etc/rsyslog.d'
     }
     'RedHat', 'Amazon': {
       $package_name = 'rsyslog'
       $service_name = 'rsyslog'
+      $conf_template = 'rsyslog.conf.el.erb'
       $conf_dir     = '/etc/rsyslog.d'
     }
     default: {
