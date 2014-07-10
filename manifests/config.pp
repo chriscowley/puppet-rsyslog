@@ -24,7 +24,7 @@ class rsyslog::config (
       content => template('rsyslog/udp_listen.conf.erb'),
     }
   }
-  if $tcp_port {
+  if is_numeric($tcp_port) {
     file { "${conf_dir}/tcp_listen.conf":
       ensure  => present,
       owner   => 'root',
@@ -32,5 +32,5 @@ class rsyslog::config (
       mode    => '0644',
       content => template('rsyslog/tcp_listen.conf.erb'),
     }
-  }
+#  }
 }
